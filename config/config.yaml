@@ -1,13 +1,13 @@
 server:
-  port: 8080
+  port: 8000
   allowOrigins:
     - "*"
   bodyLimit: "10M" # MiB
   timeout: 30 # Seconds
 
 oauth2:
-  playerRedirectUrl: "http://localhost:8080/v1/oauth2/google/player/login/callback"
-  adminRedirectUrl: "http://localhost:8080/v1/oauth2/google/admin/login/callback"
+  playerRedirectUrl: "http://localhost:8000/v1/oauth2/google/player/login/callback"
+  adminRedirectUrl: "http://localhost:8000/v1/oauth2/google/admin/login/callback"
   clientId: "xxxxx.apps.googleusercontent.com"
   clientSecret: "xxxxx"
   endpoints:
