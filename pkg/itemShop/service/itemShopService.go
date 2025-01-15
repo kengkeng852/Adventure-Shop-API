@@ -4,5 +4,5 @@ import _itemShopModel "github.com/kengkeng852/adventure-shop-api/pkg/itemShop/mo
 
 
 type ItemShopService interface {
-	Listing(itemFilter *_itemShopModel.ItemFilter) ([]*_itemShopModel.Item, error)
+	Listing(itemFilter *_itemShopModel.ItemFilter) (*_itemShopModel.ItemResult, error)
 }
