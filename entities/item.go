@@ -1,6 +1,9 @@
 package entities
 
-import "time"
+import (  
+    "time"  
+    _itemShopModel "github.com/kengkeng852/adventure-shop-api/pkg/itemShop/model"  
+)
 
 type (
 	Item struct {
@@ -15,3 +18,13 @@ type (
         UpdatedAt time.Time `gorm:"not null; autoCreateTime;"`
 	}
 )
+
+func (i *Item) ToItemModel() *_itemShopModel.Item {
+    return &_itemShopModel.Item{
+        ID: i.ID,
+        Name: i.Name,
+        Description: i.Description,
+        Picture: i.Picture,
+        Price: i.Price,
+    }
+}
