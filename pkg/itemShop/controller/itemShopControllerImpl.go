@@ -22,7 +22,7 @@ func (c *itemShopControllerImpl) Listing(pctx echo.Context) error {
 
 	customEchoRequest := custom.NewCustomEchoRequest(pctx)
 
-	if err := customEchoRequest.Bind(itemFilter); err != nil { 
+	if err := customEchoRequest.Bind(itemFilter); err != nil {
 		return custom.CustomError(pctx, http.StatusBadRequest, err.Error())
 	}
 
