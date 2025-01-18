@@ -18,7 +18,7 @@ func NewGoogleOAuth2Service(playerRepository _playerRepository.PlayerRepository,
 }
 
 func (s *googleOAuth2Service) PlayerAccountCreating(playerCreatingReq *_playerModel.PlayerCreatingReq) error {
-	if s.isPlayerValid(playerCreatingReq.ID) {
+	if !s.IsPlayerValid(playerCreatingReq.ID) { //shouldn't have at first so it can be created
 		playerEntity := &entities.Player{
 			ID:     playerCreatingReq.ID,
 			Name:   playerCreatingReq.Name,
@@ -35,7 +35,7 @@ func (s *googleOAuth2Service) PlayerAccountCreating(playerCreatingReq *_playerMo
 }
 
 func (s *googleOAuth2Service) AdminAccountCreating(adminCreatingReq *_adminModel.AdminCreatingReq) error {
-	if s.isPlayerValid(adminCreatingReq.ID) {
+	if !s.IsAdminValid(adminCreatingReq.ID) {
 		adminEntity := &entities.Admin{
 			ID:     adminCreatingReq.ID,
 			Name:   adminCreatingReq.Name,
@@ -51,7 +51,7 @@ func (s *googleOAuth2Service) AdminAccountCreating(adminCreatingReq *_adminModel
 	return nil
 }
 
-func (s *googleOAuth2Service) isPlayerValid(playerID string) bool {
+func (s *googleOAuth2Service) IsPlayerValid(playerID string) bool {
 	player, err := s.playerRepository.FindByID(playerID)
 	if err != nil {
 		return false
@@ -60,7 +60,7 @@ func (s *googleOAuth2Service) isPlayerValid(playerID string) bool {
 	return player != nil
 }
 
-func (s *googleOAuth2Service) isAdminValid(adminID string) bool {
+func (s *googleOAuth2Service) IsAdminValid(adminID string) bool {
 	admin, err := s.adminRepository.FindByID(adminID)
 	if err != nil {
 		return false
