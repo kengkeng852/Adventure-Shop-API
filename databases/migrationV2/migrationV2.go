@@ -11,7 +11,7 @@ func main() {
 	conf := config.ConfigGetting()
 	db := databases.NewPostgresDatabase(conf.Database)
 
-	tx := db.ConnectionGetting().Begin()
+	tx := db.Connect().Begin()
 
 	itemAdding(tx)
 
@@ -22,7 +22,7 @@ func main() {
 }
 
 func itemAdding(tx *gorm.DB) {
-	items := []entities.Item {
+	items := []entities.Item{
 		{
 			Name:        "Sword",
 			Description: "A sword that can be used to fight enemies.",

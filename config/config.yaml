@@ -8,8 +8,8 @@ server:
 oauth2:
   playerRedirectUrl: "http://localhost:8000/v1/oauth2/google/player/login/callback"
   adminRedirectUrl: "http://localhost:8000/v1/oauth2/google/admin/login/callback"
-  clientId: "xxxxx.apps.googleusercontent.com"
-  clientSecret: "xxxxx"
+  clientId: "53338160379-hgtnepm0ntva1a168n0u0egks5bd9dtt.apps.googleusercontent.com"
+  clientSecret: "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"
   endpoints:
     authUrl: "https://accounts.google.com/o/oauth2/auth?access_type=offline&approval_prompt=force"
     tokenUrl: "https://oauth2.googleapis.com/token"

@@ -11,7 +11,7 @@ func main() {
 	conf := config.ConfigGetting()
 	db := databases.NewPostgresDatabase(conf.Database)
 
-	tx := db.ConnectionGetting().Begin()
+	tx := db.Connect().Begin()
 
 	playerMigration(tx)
 	adminMigration(tx)
@@ -20,12 +20,11 @@ func main() {
 	inventoryMigration(tx)
 	purchaseHistoryMigration(tx)
 
-
 	if err := tx.Commit().Error; err != nil {
 		tx.Rollback()
 		panic(err)
 	}
- 
+
 }
 
 func playerMigration(tx *gorm.DB) {

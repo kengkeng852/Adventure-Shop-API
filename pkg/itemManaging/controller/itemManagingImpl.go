@@ -61,7 +61,20 @@ func getItemID(pctx echo.Context) (uint64, error) {
 	itemID := pctx.Param("itemID")
 	itemIDUint64, err := strconv.ParseUint(itemID, 10, 64)
 	if err != nil {
-		return 0,nil
+		return 0, nil
 	}
 	return itemIDUint64, nil
+}
+
+func (c *itemManagingControllerImpl) Archiving(pctx echo.Context) error {
+	itemID, err := getItemID(pctx)
+	if err != nil {
+		return custom.CustomError(pctx, http.StatusBadRequest, err.Error())
+	}
+
+	if err := c.itemManagingService.Archiving(itemID); err != nil {
+		return custom.CustomError(pctx, http.StatusInternalServerError, err.Error())
+	}
+
+	return pctx.NoContent(http.StatusNoContent)
 }
