@@ -66,6 +66,7 @@ func (s *echoServer) Start() {
 	s.initItemShopRouter()
 	s.initItemManagingRouter(authorizingMiddleware)
 	s.initPlayerCoinRouter(authorizingMiddleware)
+	s.initInventoryRouter(authorizingMiddleware)
 
 	quitCh := make(chan os.Signal, 1)
 
@@ -119,7 +120,7 @@ func getBodyLimitMiddleware(bodyLimit string) echo.MiddlewareFunc {
 	return middleware.BodyLimit(bodyLimit)
 }
 
-func (s *echoServer) getAuthorizingMiddleware() *authorizingMiddleware{
+func (s *echoServer) getAuthorizingMiddleware() *authorizingMiddleware {
 	playerRepository := _playerRepository.NewPlayerRepositoryImpl(s.db, s.app.Logger)
 	adminRepository := _adminRepository.NewAdminRepositoryImpl(s.db, s.app.Logger)
 
@@ -130,9 +131,9 @@ func (s *echoServer) getAuthorizingMiddleware() *authorizingMiddleware{
 		s.app.Logger,
 	)
 
-	return &authorizingMiddleware {
+	return &authorizingMiddleware{
 		oauth2Controller: oauth2Controller,
-		oauth2Conf: s.conf.OAuth2,
-		logger: s.app.Logger,
+		oauth2Conf:       s.conf.OAuth2,
+		logger:           s.app.Logger,
 	}
 }

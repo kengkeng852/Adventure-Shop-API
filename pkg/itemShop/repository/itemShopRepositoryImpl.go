@@ -77,3 +77,15 @@ func (r *itemShopRepositoryImpl) FindByID(itemID uint64) (*entities.Item, error)
 
 	return item, nil
 }
+
+func (r *itemShopRepositoryImpl) FindByIDList(itemIDList []uint64) ([]*entities.Item, error){
+	itemList := make([]*entities.Item, 0)
+
+	if err := r.db.Connect().Model(&entities.Item{}).Where("id in ?", itemIDList,
+	).Find(&itemList).Error; err != nil {
+		r.logger.Errorf("Failed to find items by ID: %s", err.Error())
+		return nil, &_itemShopException.ItemListing{}
+	}
+
+	return itemList, nil
+}
