@@ -63,7 +63,7 @@ func (s *echoServer) Start() {
 	s.app.GET("/v1/health", s.healthCheck)
 
 	s.initOAuthRouter()
-	s.initItemShopRouter()
+	s.initItemShopRouter(authorizingMiddleware)
 	s.initItemManagingRouter(authorizingMiddleware)
 	s.initPlayerCoinRouter(authorizingMiddleware)
 	s.initInventoryRouter(authorizingMiddleware)

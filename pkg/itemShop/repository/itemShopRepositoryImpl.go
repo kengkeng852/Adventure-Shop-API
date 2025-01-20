@@ -6,6 +6,7 @@ import (
 	_itemShopException "github.com/kengkeng852/adventure-shop-api/pkg/itemShop/exception"
 	_itemShopModel "github.com/kengkeng852/adventure-shop-api/pkg/itemShop/model"
 	"github.com/labstack/echo/v4"
+	"gorm.io/gorm"
 )
 
 type itemShopRepositoryImpl struct {
@@ -15,6 +16,19 @@ type itemShopRepositoryImpl struct {
 
 func NewItemShopRepositoryImpl(db databases.Database, logger echo.Logger) ItemShopRepository {
 	return &itemShopRepositoryImpl{db, logger}
+}
+
+func (r *itemShopRepositoryImpl) TransactionBegin() *gorm.DB {
+	tx := r.db.Connect()
+	return tx.Begin()
+}
+
+func (r *itemShopRepositoryImpl) TransactionRollback(tx *gorm.DB) error {
+	return tx.Rollback().Error
+}
+
+func (r *itemShopRepositoryImpl) TransactionCommit(tx *gorm.DB) error {
+	return tx.Commit().Error
 }
 
 func (r *itemShopRepositoryImpl) Listing(itemFilter *_itemShopModel.ItemFilter) ([]*entities.Item, error) {
@@ -89,3 +103,20 @@ func (r *itemShopRepositoryImpl) FindByIDList(itemIDList []uint64) ([]*entities.
 
 	return itemList, nil
 }
+
+func (r *itemShopRepositoryImpl) PurchaseHistoryRecording(tx *gorm.DB, purchasingEntity *entities.PurchaseHistory) (*entities.PurchaseHistory, error) {
+	connection := r.db.Connect()
+	if tx != nil {
+		connection = tx
+	}
+	
+	insertedPurchasing := new(entities.PurchaseHistory)
+
+	if err := connection.Create(purchasingEntity).Scan(insertedPurchasing).Error; err != nil {
+		r.logger.Errorf("Failed to record purchase history %s", err.Error())
+		return nil, &_itemShopException.HistoryOfPurchaseRecording{}
+	}
+
+	return insertedPurchasing, nil
+}
+

@@ -11,5 +11,6 @@ type PurchaseHistory struct {
 	ItemPrice       uint      `gorm:"not null;"`
 	ItemPicture     string    `gorm:"type:varchar(128);not null;"`
 	Quantity        uint      `gorm:"not null;"`
-	CreatedAt       time.Time `gorm:"not null;autoCreateTime;"`
+	IsBuying        bool      `gorm:"type:boolean;not null;"` //to be more practical it should be enum not boolean
+	CreatedAt       time.Time `gorm:"not null;autoCreateTime;"` 
 }

@@ -15,12 +15,12 @@ func NewPlayerCoinServiceImpl(playerCoinRepository _playerCoinRepository.PlayerC
 }
 
 func (s *playerCoinServiceImpl) CoinAdding(coinAddingReq *_playerCoinModel.CoinAddingReq) (*_playerCoinModel.PlayerCoin, error) {
-	playerCoinEntity := entities.PlayerCoin{
+	playerCoinEntity := &entities.PlayerCoin{
 		PlayerID: coinAddingReq.PlayerID,
 		Amount:   coinAddingReq.Amount,
 	}
 
-	playerCoinEntityResult, err := s.playerCoinRepository.CoinAdding(&playerCoinEntity)
+	playerCoinEntityResult, err := s.playerCoinRepository.CoinAdding(nil, playerCoinEntity)
 	if err != nil {
 		return nil, err
 	}
