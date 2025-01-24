@@ -1,7 +1,4 @@
 # Adventure Shop API
-
-## Project Description
-
 The Adventure Shop API is a RESTful service designed to manage a virtual shop for players, featuring OAuth2 authentication, item management, and player inventory tracking. This project is built using Golang, with PostgreSQL for data persistence, and includes middleware for player and admin authorization.
 
 ## Features
